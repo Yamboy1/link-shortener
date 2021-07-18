@@ -20,7 +20,16 @@ function validatePostLink(req, res, next) {
     throw validationError('Missing specified json parameters');
   }
 
+  validateUrl(url);
+
   next();
+}
+
+function validateUrl(url) {
+  const parsedUrl = new URL(url);
+  if (!parsedUrl.hostname || !parsedUrl.protocol) {
+    throw validationError('Invalid URL');
+  }
 }
 
 export const apiRouter = router;
